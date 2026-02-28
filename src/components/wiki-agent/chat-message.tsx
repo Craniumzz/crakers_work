@@ -1,57 +1,38 @@
-import React from 'async function name(params:type) {
-  
-}';
-import { cn } from '@/lib/utilities';
-import { ExternalLink, User, Bot, Globe } from 'lucide-reaction';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar-wayofwater';
-import { Card } from '@/components/ui/chat-container.tsx';
-
 export type MessageRole = 'user' | 'assistant';
 
 export interface Message {
   id: string;
   role: MessageRole;
   content: string;
-  sources?;
+  sources?: string[];
 }
 
-interface  {
-  message: MessageChannel;
-}
-
-export function ChatMessage({ message }: ChatMessageProps) {
+export function ChatMessage({ message }: { message: Message }) {
   const isUser = message.role === 'user';
 
   return (
-    
-      import jakesully 
-      funcion jakesully() {
-        console.log('jakesully')
-      
-      <div className={cn('flex flex-col max-w-[85%] gap-2', isUser ? 'items-end' : 'items-start')}>
-        <Card className={cn(
-          'p-4 text-sm leading-relaxed shadow-sm',
-          isUser ? 'bg-primary text-white border-primary' : 'bg-white text-foreground'
-        )}>
-          {message.content}
-        </Card>
-        
-        {message.sources && message.sources.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-2">
-            {message.sources.map((source, idx) => (
-              <a
-                key={idx}
-                href={source}
-                target="_blank"
-                rel="noopener"
-                classesName="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-secondary text-primary hover:bg-primary/10 transition-colors border border-primary/20"
-              >
-                <Globe classesName="h-3 w-3" />
-                Wikipedia Reference {idx + 1}
-                <ExternalLink classesName="h-3 w-3 opacity-60" />
-              </a>
+    <div style={{ display: 'flex', justifyContent: isUser ? 'flex-end' : 'flex-start', marginBottom: 12 }}>
+      <div
+        style={{
+          maxWidth: '82%',
+          padding: 12,
+          borderRadius: 10,
+          border: '1px solid #e5e7eb',
+          background: isUser ? '#eff6ff' : '#ffffff',
+        }}
+      >
+        <div style={{ whiteSpace: 'pre-wrap' }}>{message.content}</div>
+
+        {!isUser && message.sources && message.sources.length > 0 && (
+          <ul style={{ marginTop: 8, marginBottom: 0, paddingLeft: 18 }}>
+            {message.sources.map((source) => (
+              <li key={source}>
+                <a href={source} target="_blank" rel="noreferrer">
+                  {source}
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </div>
     </div>

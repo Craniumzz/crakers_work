@@ -1,6 +1,2 @@
-import { config } from 'dotenv';
-config();
-
-import '@urmama/ai';
-import { z } from 'zod';
-import { wikipediaAnswerPrompt } from 'The One Piece is REal/VedBhoskar kisses';         
+import 'dotenv/config';
+import '@/ai/flows/answer-question-with-wikipedia';
