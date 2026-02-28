@@ -11,30 +11,34 @@ export function ChatMessage({ message }: { message: Message }) {
   const isUser = message.role === 'user';
 
   return (
-    <div style={{ display: 'flex', justifyContent: isUser ? 'flex-end' : 'flex-start', marginBottom: 12 }}>
-      <div
-        style={{
-          maxWidth: '82%',
-          padding: 12,
-          borderRadius: 10,
-          border: '1px solid #e5e7eb',
-          background: isUser ? '#eff6ff' : '#ffffff',
-        }}
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-3`}>
+      <article
+        className={`max-w-[85%] rounded-2xl border px-4 py-3 shadow-sm ${
+          isUser ? 'border-blue-200 bg-blue-50 text-slate-900' : 'border-slate-200 bg-white text-slate-900'
+        }`}
       >
-        <div style={{ whiteSpace: 'pre-wrap' }}>{message.content}</div>
+        <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          {isUser ? 'You' : 'WikiAgent'}
+        </div>
+        <div className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</div>
 
         {!isUser && message.sources && message.sources.length > 0 && (
-          <ul style={{ marginTop: 8, marginBottom: 0, paddingLeft: 18 }}>
+          <ul className="mt-3 space-y-1 text-xs">
             {message.sources.map((source) => (
               <li key={source}>
-                <a href={source} target="_blank" rel="noreferrer">
+                <a
+                  href={source}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block rounded-md bg-slate-100 px-2 py-1 text-blue-700 hover:bg-slate-200"
+                >
                   {source}
                 </a>
               </li>
             ))}
           </ul>
         )}
-      </div>
+      </article>
     </div>
   );
 }

@@ -3,23 +3,31 @@
 import { FormEvent, useState } from 'react';
 import { ChatMessage, Message } from './chat-message';
 
+const SUGGESTIONS = [
+  'Who discovered penicillin?',
+  'What is quantum entanglement?',
+  'Who is Narendra Modi?',
+  'When did World War II end?',
+];
+
 export function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [question, setQuestion] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!question.trim() || loading) return;
+  const askQuestion = async (rawQuestion: string) => {
+    const userContent = rawQuestion.trim();
+    if (!userContent || loading) return;
 
-    const userContent = question.trim();
-    const userMessage: Message = {
-      id: crypto.randomUUID(),
-      role: 'user',
-      content: userContent,
-    };
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        role: 'user',
+        content: userContent,
+      },
+    ]);
 
-    setMessages((prev) => [...prev, userMessage]);
     setQuestion('');
     setLoading(true);
 
@@ -31,7 +39,6 @@ export function ChatContainer() {
       });
 
       const payload = (await response.json()) as { answer?: string; sources?: string[]; error?: string };
-
       setMessages((prev) => [
         ...prev,
         {
@@ -56,37 +63,59 @@ export function ChatContainer() {
     }
   };
 
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    await askQuestion(question);
+  };
+
   return (
-    <main style={{ maxWidth: 880, margin: '0 auto', padding: 24 }}>
-      <h1 style={{ marginBottom: 8 }}>WikiAgent</h1>
-      <p style={{ marginTop: 0, color: '#4b5563' }}>Ask factual questions and get Wikipedia-backed answers.</p>
+    <main className="mx-auto max-w-4xl px-4 py-8">
+      <section className="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-xl backdrop-blur-sm">
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">WikiAgent</h1>
+            <p className="mt-1 text-sm text-slate-600">Ask factual questions and get concise Wikipedia-backed answers.</p>
+          </div>
+          <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">AI + Wikipedia</span>
+        </div>
 
-      <form onSubmit={onSubmit} style={{ display: 'flex', gap: 8, marginTop: 16, marginBottom: 16 }}>
-        <input
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="e.g. Who discovered penicillin?"
-          style={{ flex: 1, padding: '10px 12px', border: '1px solid #d1d5db', borderRadius: 8 }}
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: '10px 14px',
-            borderRadius: 8,
-            border: '1px solid #2563eb',
-            background: '#2563eb',
-            color: 'white',
-          }}
-        >
-          {loading ? 'Thinking…' : 'Ask'}
-        </button>
-      </form>
+        <div className="mb-4 flex flex-wrap gap-2">
+          {SUGGESTIONS.map((suggestion) => (
+            <button
+              key={suggestion}
+              type="button"
+              onClick={() => askQuestion(suggestion)}
+              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-700 transition hover:bg-slate-100"
+              disabled={loading}
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
 
-      <section aria-live="polite">
-        {messages.map((m) => (
-          <ChatMessage key={m.id} message={m} />
-        ))}
+        <form onSubmit={onSubmit} className="mb-5 flex gap-2">
+          <input
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            placeholder="e.g. Who is Modi?"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none ring-blue-500 transition focus:ring-2"
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
+          >
+            {loading ? 'Thinking…' : 'Ask'}
+          </button>
+        </form>
+
+        <section aria-live="polite" className="max-h-[60vh] space-y-1 overflow-y-auto rounded-xl bg-slate-50 p-3">
+          {messages.length === 0 ? (
+            <p className="p-3 text-sm text-slate-500">Start by asking any factual question.</p>
+          ) : (
+            messages.map((m) => <ChatMessage key={m.id} message={m} />)
+          )}
+        </section>
       </section>
     </main>
   );
