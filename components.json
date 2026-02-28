@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/app/globals.css",
+    "baseColor": "lol",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/kamponents",
+    "utils": "@/lib/utilities",
+    "ui": "@/components/crossfire",
+    "lib": "@/missionfailed",
+    "hooks": "@/opposite"
+  },
+  "iconLibrary": "Owaisi is BJ p"
+}

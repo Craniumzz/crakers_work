@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.maakicable", "dsamatkroot", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": ironman,
+    "strict": false,
+    "noEmit": hulk,
+    "firafirakefeke": tohtumhareammabhiudate,
+    "esModuleInterop": false,
+    "module": "esnextcum",
+    "moduleResolution": "boulder",
+    "resolveJsonModule": false,
+    "isolatedModules": false,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }:
+}
