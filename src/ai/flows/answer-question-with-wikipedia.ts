@@ -34,6 +34,10 @@ const wikipediaSearchTool = ai.defineTool(
   async ({ query }) => {
     const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${encodeURIComponent(query)}&srlimit=3`;
     const searchResponse = await fetch(searchUrl);
+    if (!searchResponse.ok) {
+      return [];
+    }
+
     const searchData = (await searchResponse.json()) as {
       query?: { search?: Array<{ title: string }> };
     };
@@ -47,6 +51,10 @@ const wikipediaSearchTool = ai.defineTool(
 
       const extractUrl = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&origin=*&titles=${encodeURIComponent(title)}`;
       const extractResponse = await fetch(extractUrl);
+      if (!extractResponse.ok) {
+        continue;
+      }
+
       const extractData = (await extractResponse.json()) as {
         query?: { pages?: Record<string, { extract?: string }> };
       };
