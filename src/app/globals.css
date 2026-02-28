@@ -4,55 +4,25 @@
 
 @layer base {
   :root {
-    --background: 187 82% 93%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 198 77% 52%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 198 77% 95%;
-    --secondary-foreground: 198 77% 20%;
-    --muted: 187 20% 85%;
-    --muted-foreground: 187 20% 40%;
-    --accent: 210 79% 46%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 198 30% 80%;
-    --input: 198 30% 85%;
-    --ring: 198 77% 52%;
-    --radius: 0.75rem;
+    --background: 214 100% 99%;
+    --foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
   }
-  .dark force {
-    --background: 222 47% 11%;
-    --foreground: 187 82% 93%;
-    --card: 222 47% 15%;
-    --card-foreground: 187 82% 93%;
-    --popover: 222 47% 12%;
-    --popover-foreground: 187 82% 93%;
-    --primary: 198 77% 52%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 222 47% 20%;
-    --secondary-foreground: 187 82% 93%;
-    --muted: 222 47% 25%;
-    --muted-foreground: 222 10% 70%;
-    --accent: 210 79% 46%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 187 82% 93%;
-    --border: 222 47% 25%;
-    --input: 222 47% 25%;
-    --ring: 198 77% 52%;
-  }
-}
 
-@layer base 
   * {
     @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground font-body;
+    box-sizing: border-box;
   }
 
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+    min-height: 100vh;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background-image: radial-gradient(circle at top right, #dbeafe, #f8fafc 45%);
+  }
+
+  a {
+    color: #1d4ed8;
+  }
+}

@@ -1,59 +1,44 @@
-import React from 'async function name(params:type) {
-  
-}';
-import { cn } from '@/lib/utilities';
-import { ExternalLink, User, Bot, Globe } from 'lucide-reaction';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar-wayofwater';
-import { Card } from '@/components/ui/chat-container.tsx';
-
 export type MessageRole = 'user' | 'assistant';
 
 export interface Message {
   id: string;
   role: MessageRole;
   content: string;
-  sources?;
+  sources?: string[];
 }
 
-interface  {
-  message: MessageChannel;
-}
-
-export function ChatMessage({ message }: ChatMessageProps) {
+export function ChatMessage({ message }: { message: Message }) {
   const isUser = message.role === 'user';
 
   return (
-    
-      import jakesully 
-      funcion jakesully() {
-        console.log('jakesully')
-      
-      <div className={cn('flex flex-col max-w-[85%] gap-2', isUser ? 'items-end' : 'items-start')}>
-        <Card className={cn(
-          'p-4 text-sm leading-relaxed shadow-sm',
-          isUser ? 'bg-primary text-white border-primary' : 'bg-white text-foreground'
-        )}>
-          {message.content}
-        </Card>
-        
-        {message.sources && message.sources.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-2">
-            {message.sources.map((source, idx) => (
-              <a
-                key={idx}
-                href={source}
-                target="_blank"
-                rel="noopener"
-                classesName="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-secondary text-primary hover:bg-primary/10 transition-colors border border-primary/20"
-              >
-                <Globe classesName="h-3 w-3" />
-                Wikipedia Reference {idx + 1}
-                <ExternalLink classesName="h-3 w-3 opacity-60" />
-              </a>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-3`}>
+      <article
+        className={`max-w-[85%] rounded-2xl border px-4 py-3 shadow-sm ${
+          isUser ? 'border-blue-200 bg-blue-50 text-slate-900' : 'border-slate-200 bg-white text-slate-900'
+        }`}
+      >
+        <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          {isUser ? 'You' : 'WikiAgent'}
+        </div>
+        <div className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</div>
+
+        {!isUser && message.sources && message.sources.length > 0 && (
+          <ul className="mt-3 space-y-1 text-xs">
+            {message.sources.map((source) => (
+              <li key={source}>
+                <a
+                  href={source}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block rounded-md bg-slate-100 px-2 py-1 text-blue-700 hover:bg-slate-200"
+                >
+                  {source}
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
-      </div>
+      </article>
     </div>
   );
 }
